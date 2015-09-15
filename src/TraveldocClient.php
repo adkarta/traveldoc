@@ -3,6 +3,7 @@
 namespace Adkarta\Traveldoc;
 
 use Adkarta\Traveldoc\SoapClient as SoapClient;
+use Adkarta\Traveldoc\Session;
 
 class TraveldocClient 
 {
@@ -24,9 +25,15 @@ class TraveldocClient
 
     }
 
-    public function getSession($sessionMessage)
+    public function getSession()
     {
-        $out = $this->soap_client->GetSession($sessionMessage);
+        $session = new Session();
+        $session->UserName = $this->config['username'];
+        $session->Password = $this->config['password'];
+        $session->ClientName = $this->config['client_name'];
+        $session->ConfigurationName = $this->config['configuration_name'];
+
+        $out = $this->soap_client->GetSession($session);
         $SessionGUID = $out->GetSessionResult;
         return $SessionGUID;
     }
