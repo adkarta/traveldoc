@@ -19,21 +19,16 @@ class TraveldocClient
         $this->config = $config;
 
         if ($this->soap_client == null) {
-            $this->soap_client = new SoapClient($wsdl, array('soap_version' => SOAP_1_2));
+            $this->soap_client = @new SoapClient($wsdl, array('soap_version' => SOAP_1_2));
         }
 
     }
 
     public function getSession($sessionMessage)
     {
-        try {
-            $out = $this->soap_client->GetSession($sessionMessage);
-            $SessionGUID = $out->GetSessionResult;
-            return $SessionGUID;
-        } catch (SoapFault $fault) {
-            // echo json_encode($fault);
-            return false;
-        }
+        $out = $this->soap_client->GetSession($sessionMessage);
+        $SessionGUID = $out->GetSessionResult;
+        return $SessionGUID;
     }
 
 }
