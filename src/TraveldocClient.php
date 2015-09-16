@@ -38,4 +38,19 @@ class TraveldocClient
         return $SessionGUID;
     }
 
+    public function checkPassenger($passenger)
+    {
+        return $this->soap_client->CheckPassenger($passenger);
+    }
+
+    public function getDocumentTypes($session)
+    {
+        $documentType = new \stdClass();
+        $documentType->SessionGUID = $session;
+
+        return $this->soap_client->GetDocumentTypes($documentType);
+    }
+
+
+
 }
